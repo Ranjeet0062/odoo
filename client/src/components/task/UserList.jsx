@@ -34,6 +34,7 @@ const UserList = ({ setTeam, team }) => {
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full cursor-default rounded bg-white pl-3 pr-10 text-left px-3 py-2.5 2xl:py-3 border border-gray-300 sm:text-sm">
             <span className="block truncate">
+              {console.log("selectedUsers  ", selectedUsers)}
               {selectedUsers?.map((user) => user.name).join(", ")}
             </span>
 
@@ -52,6 +53,7 @@ const UserList = ({ setTeam, team }) => {
             leaveTo="opacity-0"
           >
             <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            {console.log("data ",data)}
               {data?.map((user, index) => (
                 <Listbox.Option
                   key={index}
@@ -75,7 +77,7 @@ const UserList = ({ setTeam, team }) => {
                             {getInitials(user.name)}
                           </span>
                         </div>
-                        <span>{user.name}</span>
+                        <span><b>{user.name}</b>{" - "+user.role}</span>
                       </div>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">

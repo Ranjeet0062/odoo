@@ -39,7 +39,7 @@ const TaskDialog = ({ task }) => {
     }
   };
 
-  const deleteClicks = () => {
+  const Clicks = () => {
     setOpenDialog(true);
   };
 

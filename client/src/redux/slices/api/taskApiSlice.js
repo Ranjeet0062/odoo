@@ -80,7 +80,6 @@ export const taskApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
-
 export const {
   useGetDashboardStatsQuery,
   useGetAllTaskQuery,
