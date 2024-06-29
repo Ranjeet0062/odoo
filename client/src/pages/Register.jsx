@@ -1,15 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import Textbox from "../components/Textbox";
 import Button from "../components/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { useLoginMutation } from "../redux/slices/api/authApiSlice";
-import Loading from "../components/Loader";
-import { toast } from "sonner";
-import { setCredentials } from "../redux/slices/authSlice"; // Import setCredentials action creator
+import { useSelector } from "react-redux";
 
-const Login = () => {
+const Register = () => {
   const { user } = useSelector((state) => state.auth);
   const {
     register,
@@ -18,18 +14,8 @@ const Login = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [login, { isLoading }] = useLoginMutation();
-
   const submitHandler = async (data) => {
-    try {
-      const result = await login(data).unwrap();
-      dispatch(setCredentials(result));
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.data?.message || "An error occurred during login.");
-    }
+    console.log("submit");
   };
 
   useEffect(() => {
@@ -73,6 +59,18 @@ const Login = () => {
 
             <div className="flex flex-col gap-y-5">
               <Textbox
+                placeholder="Name"
+                type="name"
+                name="name"
+                label="Name"
+                className="w-full rounded-full"
+                register={register("name", {
+                  required: "Name is required!",
+                })}
+                autocomplete="email"
+                error={errors.name ? errors.name.message : ""}
+              />
+              <Textbox
                 placeholder="email@example.com"
                 type="email"
                 name="email"
@@ -82,6 +80,7 @@ const Login = () => {
                   required: "Email Address is required!",
                 })}
                 error={errors.email ? errors.email.message : ""}
+                autocomplete="email"
               />
               <Textbox
                 placeholder="your password"
@@ -94,29 +93,35 @@ const Login = () => {
                 })}
                 error={errors.password ? errors.password.message : ""}
               />
-              <span className="text-sm text-gray-500 hover:text-blue-600 hover:underline cursor-pointer">
-                Forget Password?
-              </span>
-              <div className="flex justify-between">
+              <div className="flex gap-2">
+                <label htmlFor="user">As</label>
+                <select
+                  id="user"
+                  className="border-5 border-red-200 text-red-500"
+                  autoComplete="role"
+                >
+                  <option value="admin" className=" mt-1 h-2">
+                    Admin
+                  </option>
+                </select>
+              </div>
+
+              <div className="flex justify-between ">
                 <span className="text-sm text-gray-500">
-                  If You Want To Become Admin Than Register
+                  If You Already Register Than
                 </span>
-                <Link to="/register">
+                <Link to="/login">
                   <span className="text-md text-gray-500 hover:text-blue-600 hover:underline cursor-pointer">
-                    Register
+                    Login
                   </span>
                 </Link>
               </div>
 
-              {isLoading ? (
-                <Loading />
-              ) : (
-                <Button
-                  type="submit"
-                  label="Submit"
-                  className="w-full h-10 bg-blue-700 text-white rounded-full"
-                />
-              )}
+              <Button
+                type="submit"
+                label="Submit"
+                className="w-full h-10 bg-blue-700 text-white rounded-full"
+              />
             </div>
           </form>
         </div>
@@ -125,4 +130,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

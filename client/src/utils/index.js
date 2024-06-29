@@ -25,6 +25,11 @@ export function dateFormatter(dateString) {
 }
 
 export function getInitials(fullName) {
+  // Check if fullName is a valid string
+  if (!fullName || typeof fullName !== "string") {
+    return ""; // Provide a default value or handle the case as needed
+  }
+
   const names = fullName.split(" ");
 
   const initials = names.slice(0, 2).map((name) => name[0].toUpperCase());
