@@ -6,16 +6,16 @@ const protectRoute = async (req, res, next) => {
     let token = req.cookies?.token;
     if (token) {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
-      const resp = await User.findById(decodedToken.userId).select(
+      console.log("inside middlewares and decoded token is", decodedToken);
+      const resp = await User.findById(decodedToken.userid).select(
         "isAdmin email"
       );
-      console.log(resp);
+      console.log("resp", resp);
 
       req.user = {
-        email: resp.email,
-        isAdmin: resp.isAdmin,
-        userId: decodedToken.userId,
+        email: res.email,
+        isAdmin: res.isAdmin,
+        userId: decodedToken.userid,
       };
 
       next();

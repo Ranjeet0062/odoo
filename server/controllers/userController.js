@@ -64,7 +64,7 @@ export const loginUser = async (req, res) => {
     const isMatch = await user.matchPassword(password);
 
     if (user && isMatch) {
-      createJWT(res, user._id);
+      await createJWT(res, user);
 
       user.password = undefined;
 
